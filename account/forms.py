@@ -15,10 +15,10 @@ class RegisterOtpForm(forms.Form):
                             validators=[validators.MaxLengthValidator(11)])
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
-    def clean(self):
-        phone = self.cleaned_data['phone']
-        if User.objects.filter(phone__exact=phone).exists():
-            raise ValidationError({"phone": "تلفن تکراری است"})
+    # def clean(self):
+    #     phone = self.cleaned_data['phone']
+    #     if User.objects.filter(phone__exact=phone).exists():
+    #         raise ValidationError({"phone": "تلفن تکراری است"})
 
 
 class CheckOtpForm(forms.Form):
