@@ -4,10 +4,9 @@ from django.urls import reverse_lazy
 from django.views import View
 from .forms import LoginForm, RegisterOtpForm, CheckOtpForm
 from django.contrib.auth import authenticate, login
-
+# import ghasedak
 from .models import Otp, User
-
-
+from uuid import uuid4
 
 
 class UserLogin(View):
@@ -41,9 +40,10 @@ class UserRegister(View):
         if form.is_valid():
             randcode = randint(1000, 9999)
             cd = form.cleaned_data
-            Otp.objects.create(phone=cd['phone'], code=randcode)
+            token = str(uuid4())
+            Otp.objects.create(phone=cd['phone'], code=randcode, token=token)
             print(randcode)
-            return redirect(reverse_lazy('account:check_otp') + f'?phone={cd["phone"]}')
+            return redirect(reverse_lazy('account:check_otp') + f'?token={token}')
 
         return render(request, 'account/register.html', {'form': form})
 
@@ -54,12 +54,13 @@ class CheckOtpView(View):
         return render(request, 'account/check_otp.html', {'form': form})
 
     def post(self, request):
-        phone = request.GET.get('phone')
+        token = request.GET.get('token')
         form = CheckOtpForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            if Otp.objects.filter(code=cd['code'], phone=phone).exists():
-                user = User.objects.create_user(phone=phone)
+            if Otp.objects.filter(code=cd['code'], token=token).exists():
+                otp = Otp.objects.get(token=token)
+                user = User.objects.create_user(phone=otp.phone)
                 login(request, user)
                 return redirect('/')
 
