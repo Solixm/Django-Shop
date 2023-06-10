@@ -83,7 +83,7 @@ class Otp(models.Model):
     token = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=11)
     code = models.SmallIntegerField()
-    expiration_date = models.DateTimeField(auto_now_add=True)
+    expiration_date = models.DateTimeField()
 
     def __str__(self):
         return self.phone
