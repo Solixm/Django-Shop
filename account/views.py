@@ -1,18 +1,24 @@
 from datetime import datetime, timedelta
 from random import randint
-from django.shortcuts import render, redirect, reverse
-from django.urls import reverse_lazy
-from django.views import View
-from .forms import LoginForm, RegisterOtpForm, CheckOtpForm
-from django.contrib.auth import authenticate, login
-import ghasedakpack
-from .models import Otp, User
 from uuid import uuid4
+
+import ghasedakpack
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect, reverse
+from django.views import View
+
+from .forms import LoginForm, RegisterOtpForm, CheckOtpForm
+from .models import Otp, User
 
 SMS = ghasedakpack.Ghasedak("1065b3cd468d2a911a79ad4b20400ab95163389aef5a5fc1d0eda477d255d003")
 
 
 class UserLogin(View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse('home:home'))
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         form = LoginForm()
         return render(request, 'account/login.html', {'form': form})
@@ -34,6 +40,11 @@ class UserLogin(View):
 
 
 class UserRegister(View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse('home:home'))
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         form = RegisterOtpForm()
         return render(request, 'account/register.html', {'form': form})
@@ -45,7 +56,8 @@ class UserRegister(View):
             randcode = randint(1000, 9999)
             SMS.verification({'receptor': cd["phone"], 'type': '1', 'template': 'solishop', 'param1': randcode})
             token = str(uuid4())
-            Otp.objects.create(phone=cd['phone'], code=randcode, token=token, expiration_date=datetime.now() + timedelta(minutes=2))
+            Otp.objects.create(phone=cd['phone'], code=randcode, token=token,
+                               expiration_date=datetime.now() + timedelta(minutes=2))
             request.session['user_registration_info'] = {
                 'phone': cd['phone'],
                 'password': cd['password']
@@ -59,6 +71,11 @@ class UserRegister(View):
 
 
 class CheckOtpView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse('home:home'))
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         try:
             user_session = request.session['user_registration_info']
