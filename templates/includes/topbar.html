@@ -5,10 +5,16 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="login">
-                    <a><i class="fa fa-user-circle"></i>{{ request.user.phone }}</a>
-                    <a href="{% url "account:register" %}" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
-                    <a href="{% url "account:login" %}" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
-                    <a href="#" class="mybtn"><i class="fa fa-cart-arrow-down"></i>سبد</a>
+
+                    {% if not user.is_authenticated %}
+                        <a href="{% url "account:register" %}" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
+                        <a href="{% url "account:login" %}" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
+                    {% else %}
+                        <a><i class="fa fa-user-circle"></i>{{ request.user.phone }}</a>
+                        <a href="{% url "account:log_out" %}" class="mybtn"><i class="fa fa-sign-out"></i>خروج</a>
+                        <a href="#" class="mybtn"><i class="fa fa-cart-arrow-down"></i>سبد</a>
+                    {% endif %}
+
                 </div>
             </div>
             <div class="col-md-6">
