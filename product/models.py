@@ -9,10 +9,10 @@ class Storage(models.Model):
 
 
 class Ram(models.Model):
-    title = models.SmallIntegerField()
+    title = models.IntegerField()
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 class Color(models.Model):
@@ -24,7 +24,8 @@ class Color(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=50)
-    des = models.CharField(max_length=100)
+    brand = models.CharField(max_length=50)
+    des = models.TextField()
     price = models.IntegerField()
     discount = models.SmallIntegerField()
     image = models.ImageField(upload_to="product")

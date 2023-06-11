@@ -23,6 +23,7 @@ from shop_project import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
+    path('product/', include('product.urls')),
     path('', include('home.urls')),
 
 ]
