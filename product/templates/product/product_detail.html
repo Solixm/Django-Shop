@@ -33,11 +33,60 @@
                                             <span>وضعیت : موجود در انبار</span><br><br>
                                             <br>
                                             <li>
-                                                رنگ بندی :
                                                 <ul>
-                                                    {% for color in product.color.all %}
-                                                        <li><i class="fa fa-square white"></i>{{ color }}</li>
-                                                    {% endfor %}
+                                                    <div class="d-flex mb-4">
+                                                        {% if product.color.all %}
+                                                            <strong class="text-dark mr-0">رنگ بندی:</strong>
+                                                        {% endif %}
+
+                                                        {% for color in product.color.all %}
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" class="custom-control-input"
+                                                                       id="{{ color.title }}"
+                                                                       name="color" value="{{ color.title }}">
+                                                                <label class="custom-control-label"
+                                                                       for="{{ color.title }}">{{ color.title }}</label>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <ul>
+                                                    <div class="d-flex mb-4">
+                                                        {% if product.ram.all %}
+                                                            <strong class="text-dark mr-0"> رم:</strong>
+                                                        {% endif %}
+
+                                                        {% for ram in product.ram.all %}
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" class="custom-control-input"
+                                                                       id="{{ ram.title }}"
+                                                                       name="ram" value="{{ ram.title }}">
+                                                                <label class="custom-control-label"
+                                                                       for="{{ ram.title }}">{{ ram.title }}</label>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <ul>
+                                                    <div class="d-flex mb-4">
+                                                        {% if product.storage.all %}
+                                                            <strong class="text-dark mr-0"> حافظه داخلی:</strong>
+                                                        {% endif %}
+
+                                                        {% for storage in product.storage.all %}
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" class="custom-control-input"
+                                                                       id="{{ storage.title }}"
+                                                                       name="storage" value="{{ storage.title }}">
+                                                                <label class="custom-control-label"
+                                                                       for="{{ storage.title }}">{{ storage.title }}</label>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -45,9 +94,9 @@
                                 </div>
                             </div>
                             <hr>
-                            <h3>85000 تومان</h3>
+                            <h3>{{ product.price }} تومان</h3>
                             <div class="btn-single">
-                                <a href="#"><i class="fa fa-cart-plus"></i>خرید آنلاین</a>
+                                <a href="#"><i class="fa fa-cart-plus"></i>افزودن به سبد خرید</a>
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -152,26 +201,22 @@
             <div class="col-md-12">
                 <div class="single-tabs">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#one"><i class="fa fa-file"></i>مشخصات فنی</a>
-                        </li>
                         <li><a data-toggle="tab" href="#two"><i class="fa fa-pencil"></i>نظرات کاربران</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="one" class="tab-pane fade">
-                            <p class="bg-light"><span>شرکت سازنده:</span>هوآوی</p>
-                            <p class="bg-light"><span>مدل:</span>Tab G6</p>
-                            <p class="bg-light"><span>گارانتی:</span>Huawei</p>
-                            <p class="bg-light"><span>شبکه های تلفن:</span>4G-3G-LTE</p>
-                            <p class="bg-light"><span>تعداد سیمکارت:</span>2</p>
-                            <p class="bg-light"><span>حافظه داخلی:</span>32G</p>
-                            <p class="bg-light"><span>پشتیبانی از کارت sd:</span>بله</p>
-                            <p class="bg-light"><span>باتری:</span>1300 میلی آمپر</p>
-                            <p class="bg-light"><span>باتری اضافی:</span>ندارد</p>
-                            <p class="bg-light"><span>جک هدفون:</span>دارد</p>
-                            <p class="bg-light"><span>گارد:</span>ندارد</p>
-                        </div>
                         <div id="two" class="tab-pane fade">
-                            نظری وجود ندارد...
+                            <div class="row">
+                                {% for info in product.informations.all %}
+                                    <div class="col-md-6">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item px-0">
+                                                {{ request.user.fullname }}:{{ info.text }}
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>

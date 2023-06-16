@@ -19,7 +19,7 @@ class Color(models.Model):
     title = models.CharField(max_length=25)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 class Product(models.Model):
@@ -32,6 +32,15 @@ class Product(models.Model):
     storage = models.ManyToManyField(Storage, related_name="products")
     ram = models.ManyToManyField(Ram, related_name="products")
     color = models.ManyToManyField(Color, related_name="products")
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+
+class Information(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='informations')
+    text = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.text[:30]
