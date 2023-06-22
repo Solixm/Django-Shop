@@ -19,18 +19,21 @@
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td class="align-middle">
-                        <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                    </td>
-                </tr>
+                {% for item in cart %}
+                    <tr>
+                        <th scope="row">{{ item.product.id }}</th>
+                        <img src="{{ item.product.image.url }}" alt="{{ cart.product.title }}">
+                        <td>{{ item.product.title }}</td>
+                        <td>{{ item.product.storage }}</td>
+                        <td>{{ item.product.color }}</td>
+                        <td>{{ item.product.ram }}</td>
+                        <td>{{ item.product.price }}</td>
+                        <td class="align-middle">
+                            <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+                        </td>
+                    </tr>
+                {% endfor %}
+
                 <tr>
                     <th scope="row">2</th>
                     <td>Jacob</td>

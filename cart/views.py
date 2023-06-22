@@ -7,13 +7,16 @@ from product.models import Product
 
 class CartDetailView(View):
     def get(self, request):
-        return render(request, 'cart/cart_detail.html', {})
+        cart = Cart(request)
+        return render(request, 'cart/cart_detail.html', {'cart': cart})
 
 
 class CartAddView(View):
     def post(self, request, pk):
         product = get_object_or_404(Product, id=pk)
-        storage, color = request.POST.get('storage'), request.POST.get('color')
+        storage, color, ram = request.POST.get('storage'), request.POST.get('color'), request.POST.get('ram')
+        cart = Cart(request)
+        cart.add(product, color, storage, ram)
         print(storage, color)
         return redirect('cart:detail')
 
