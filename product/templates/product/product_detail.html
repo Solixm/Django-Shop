@@ -3,7 +3,7 @@
 {% load static %}
 {% block main %}
     <!---------------------------------->
-    <div class="container">
+    <div class="container" xmlns="http://www.w3.org/1999/html">
         <div class="row">
             <div class="col-md-12">
                 <div class="single-box">
@@ -33,6 +33,11 @@
                                             <span>وضعیت : موجود در انبار</span><br><br>
                                             <br>
                                             <li>
+                                                <form action="{% url "cart:add" product.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="text" name="sag">
+                                                    <button type="submit">SagMit</button>
+                                                </form>
                                                 <ul>
 
                                                     <div class="d-flex mb-4">
@@ -50,7 +55,7 @@
                                                                            for="{{ color.title }}">{{ color.title }}</label>
                                                                 </div>
                                                             {% endfor %}
-                                                    </div>
+                                                        </div>
                                                 </ul>
                                             </li>
                                             <li>
@@ -97,24 +102,27 @@
                             </div>
                             <hr>
                             <h3>{{ product.price }} تومان</h3>
+                            <button type="submit">submit</button>
                             <div class="btn-single">
-                                <a href="{% url "cart:detail" %}"><i class="fa fa-cart-plus"></i>افزودن به سبد خرید</a>
+                                <a href="{% url "cart:add" pk=product.id %}"><i class="fa fa-cart-plus"></i>افزودن به
+                                    سبد خرید</a>
                             </div>
-                            </form>
-
                         </div>
-                        <div class="col-md-5">
-                            <div class="single-img">
-                                <figure>
-                                    <img src="{{ product.image.url }}" class="w-100 s-img"
-                                         data-zoom-image="img/single-tablet.jpg">
-                                </figure>
-                            </div>
+                        </form>
+
+                    </div>
+                    <div class="col-md-5">
+                        <div class="single-img">
+                            <figure>
+                                <img src="{{ product.image.url }}" class="w-100 s-img"
+                                     data-zoom-image="img/single-tablet.jpg">
+                            </figure>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!---------------------------------->
     <div class="container">
