@@ -22,7 +22,7 @@
                 {% for item in cart %}
                     <tr>
                         <th scope="row">{{ item.product.id }}</th>
-                        <img src="{{ item.product.image.url }}" alt="{{ cart.product.title }}">
+                        <img src="{{ item.product.image.url }}" alt="{{ cart.product.title }}" width="40px" height="40px">
                         <td>{{ item.product.title }}</td>
                         <td>{{ item.product.storage }}</td>
                         <td>{{ item.product.color }}</td>
@@ -33,31 +33,6 @@
                         </td>
                     </tr>
                 {% endfor %}
-
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                    <td class="align-middle">
-                        <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    <td class="align-middle">
-                        <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                    </td>
-                </tr>
-
                 </tbody>
             </table>
         </div>
