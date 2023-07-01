@@ -17,7 +17,7 @@ class Cart:
         cart = self.cart.copy()
 
         for item in cart.values():
-            item['product'] = Product.objects.get(int(id=item['id']))
+            item['product'] = Product.objects.get(id=int(item['id']))
             yield item
 
     def unique_id_generator(self, id, color, storage, ram):
